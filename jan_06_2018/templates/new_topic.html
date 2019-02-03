@@ -26,10 +26,10 @@
 								{{ error }}
 							</div>
 						{% endfor %}
-					{% else %} /!-- {% if field.errors %} --/
+					{% else %} 
 						{% render_field field class="form-control is-valid" %}
-					{% end if %} /* {% if field.errors %} */
-				{% else %} /!-- {% if form.is_bound %} --/
+					{% endif %} 
+				{% else %} 
 					{% render_field field class="form-control" %}
 				{% endif %}
 
