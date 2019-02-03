@@ -3,6 +3,7 @@ from django.urls import resolve
 from django.test import TestCase
 from .views import home, board_topics, new_topic
 from .models import Board, Topic, Post
+from django.contrib.auth.models import User
 
 class HomeTests(TestCase):
     def setUp(self):
@@ -48,7 +49,7 @@ class BoardTopicsTests(TestCase):
 class NewTopicTests(TestCase):
     def setUp(self):
         Board.objects.create(name='Django', description='Django board.')
-        User.objects.ceate_user(username='john', email='john@doe.com', password='123')
+        User.objects.create_user(username='john', email='john@doe.com', password='123')
 
     def test_new_topic_view_success_status_code(self):
         url = reverse('new_topic', kwargs={'pk': 1})
@@ -78,7 +79,7 @@ class NewTopicTests(TestCase):
         self.assertContains(response, 'href="{0}"'.format(homepage_url))
         self.assertContains(response, 'href="{0}"'.format(new_topic_url))
     def test_crf(self):
-        url = reverse('new_topic', kwargs{'pk': 1})
+        url = reverse('new_topic', kwargs={'pk': 1})
         response = self.client.get(url)
         self.assertContains(response, 'csrfmiddlewaretoken')
     def test_new_topic_valid_post_data(self):
@@ -103,7 +104,7 @@ class NewTopicTests(TestCase):
         invalid post data should not redirect
         the expected behavior is to show the form again with validation errors
         '''
-        url = reverse('new_topic', 'kwargs'={'pk': 1})
+        url = reverse('new_topic', kwargs={'pk': 1})
         data = {
             'subject': '',
             'message': ''
