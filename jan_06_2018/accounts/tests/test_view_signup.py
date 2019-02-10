@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.urls import resolve
 from django.test import TestCase
-from .views import signup
-from .forms import SignUpForm
+from ..views import signup
+from ..forms import SignUpForm
 
 class SignUpTests(TestCase):
     def setUp(self):
@@ -26,7 +26,7 @@ class SignUpTests(TestCase):
 
     def test_form_inputs(self):
         '''
-        The view must contain 5 inputs: csrf, username, email, 
+        The view must contain 5 inputs: csrf, username, email,
         password1, password2
         '''
         self.assertContains(self.response, '<input', 5)
