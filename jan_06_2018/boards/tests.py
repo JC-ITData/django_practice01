@@ -79,10 +79,12 @@ class NewTopicTests(TestCase):
         response = self.client.get(board_topics_url)
         self.assertContains(response, 'href="{0}"'.format(homepage_url))
         self.assertContains(response, 'href="{0}"'.format(new_topic_url))
+
     def test_crf(self):
         url = reverse('new_topic', kwargs={'pk': 1})
         response = self.client.get(url)
         self.assertContains(response, 'csrfmiddlewaretoken')
+
     def test_new_topic_valid_post_data(self):
         url = reverse('new_topic', kwargs={'pk': 1})
         data = {
@@ -92,6 +94,7 @@ class NewTopicTests(TestCase):
         response = self.client.post(url, data)
         self.assertTrue(Topic.objects.exists())
         self.assertTrue(Post.objects.exists())
+
     def test_new_topic_invalid_post_data(self):
         '''
         invalid post data should not redirect
@@ -102,6 +105,7 @@ class NewTopicTests(TestCase):
         form = response.context.get('form')
         self.assertEquals(response.status_code, 200)
         self.assertTrue(form.errors)
+
     def test_new_topic_invalid_post_date_empty_fields(self):
         '''
         invalid post data should not redirect
@@ -116,6 +120,7 @@ class NewTopicTests(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertFalse(Topic.objects.exists())
         self.assertFalse(Post.objects.exists())
+
     def test_contains_form(self):
         url = reverse('new_topic', kwargs={'pk': 1})
         response = self.client.get(url)
