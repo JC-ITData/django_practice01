@@ -45,7 +45,7 @@ def reply_topic(request, pk, topic_pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.topic = topic
-            post.created_By = request.user
+            post.created_by = request.user
             post.save()
             return redirect('topic_posts', pk=pk, topic_pk=topic_pk)
     else:
