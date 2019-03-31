@@ -16,7 +16,7 @@ class ReplyTopicTestCase(TestCase):
         user = User.objects.create_user(username=self.username, email='john@doe.com', password=self.password)
         self.topic = Topic.objects.create(subject='Hello, world', board=self.board, starter=user)
         Post.objects.create(message='Lorem ipsum dolor sit amet', topic=self.topic, create_by=user)
-        self.url = reverse('reply_topic', kwargs={'pk'=self.board.pk, 'topic.pk': self.topic.pk})
+        self.url = reverse('reply_topic', kwargs={'pk':self.board.pk, 'topic.pk': self.topic.pk})
 
 class LoginRequiredReplyTopicTests(ReplyTopicTestCase):
     def test_redirection(self):
@@ -93,4 +93,3 @@ class InvalidReplyTopicTests(ReplyTopicTestCase):
     def test_form_errors(self):
         form = self.response.context.get('form')
         self.assertTrue(form.errors)
-        
