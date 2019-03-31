@@ -10,6 +10,7 @@ def home(request):
 
 def board_topics(request, pk):
     board = get_object_or_404(Board, pk=pk)
+    topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts')-1)
     return render(request, 'topics.html', {'board': board})
 
 @login_required
